@@ -26,7 +26,7 @@ func readFields(c *client, token string, paths []string) (map[string]string, err
 				return nil, fail(catField, "%s: invalid field name %q", path, name)
 			}
 			if previous, seen := origin[name]; seen {
-				return nil, fail(catField, "duplicate field %q in %s and %s", name, previous, path)
+				return nil, fail(catField, "%q is defined by more than one path (%s and %s)", name, previous, path)
 			}
 			origin[name] = path
 			fields[name] = value

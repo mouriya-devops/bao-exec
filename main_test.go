@@ -91,8 +91,8 @@ func TestReadFieldsMergesAndRejectsDuplicates(t *testing.T) {
 	}
 
 	_, err = readFields(client, "token", []string{"kv/t/a/runtime", "kv/t/a/ci"})
-	if err == nil || !strings.Contains(err.Error(), `duplicate field "A"`) {
-		t.Fatalf("duplicate error = %v", err)
+	if err == nil || !strings.Contains(err.Error(), `"A" is defined by more than one path`) {
+		t.Fatalf("overlap error = %v", err)
 	}
 	if strings.Contains(err.Error(), "alpha") || strings.Contains(err.Error(), "second-value") {
 		t.Fatalf("error leaked a value: %v", err)
