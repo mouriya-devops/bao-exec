@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -67,16 +66,4 @@ func (c *client) do(method, path string, body []byte, token string) (response, e
 		return response{status: resp.StatusCode, body: payload}, nil
 	}
 	return response{}, fail(catAddress, "all %d address(es) unavailable (last: %s)", len(c.addresses), lastDetail)
-}
-
-// apiError is a parsed OpenBao error body. Only the status and the server's
-// error strings are kept; request bodies are never echoed.
-func apiErrors(body []byte) []string {
-	var parsed struct {
-		Errors []string `json:"errors"`
-	}
-	if err := json.Unmarshal(body, &parsed); err != nil {
-		return nil
-	}
-	return parsed.Errors
 }

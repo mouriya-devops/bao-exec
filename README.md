@@ -53,7 +53,8 @@ Fetch the latest release asset for the host platform and verify it against the
 published `bao-exec_<version>_checksums.txt`:
 
 ```sh
-gh release download -R mouriya-devops/bao-exec --pattern '*linux_amd64*' --dir /tmp/bao-exec
+# linux amd64; use bao-exec-darwin-arm64 or bao-exec-linux-arm64 on other hosts
+gh release download -R mouriya-devops/bao-exec --pattern 'bao-exec-linux-amd64' --pattern '*checksums*' --dir /tmp/bao-exec
 cd /tmp/bao-exec && shasum -a 256 -c *checksums.txt --ignore-missing
 install -m 0755 bao-exec-linux-amd64 /usr/local/bin/bao-exec
 ```
@@ -64,6 +65,6 @@ together with the checksum manifest.
 ## Build and test
 
 ```sh
-go build -o bao-exec .
+go build -o bin/bao-exec .
 go test ./...
 ```
